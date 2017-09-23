@@ -2,12 +2,10 @@
 
 namespace common\models;
 
-use Yii;
-
 /**
  * This is the model class for table "country".
  *
- * @property integer $country_id
+ * @property integer $id
  * @property string $name
  */
 class Country extends \yii\db\ActiveRecord
@@ -36,17 +34,18 @@ class Country extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'country_id' => 'Country ID',
+            'id' => '国家ID',
             'name' => '名字',
         ];
     }
 
-    static function names(){
-        $name = [];
-        $items = static::find()->all();
-        foreach ($items as $item) {
-            $name[$item->country_id] = $item->name;
-        }
-        return $name;
+    public static function names()
+    {
+        return static::find()->select(['name'])->indexBy('id')->column();
+    }
+
+    public function getProvinces()
+    {
+        return $this->hasMany(Province::className(), ['country_id' => 'id']);
     }
 }

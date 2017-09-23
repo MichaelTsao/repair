@@ -42,8 +42,18 @@ class City extends \yii\db\ActiveRecord
         ];
     }
 
-    static function names()
+    public static function names()
     {
         return static::find()->select(['name'])->indexBy('id')->column();
+    }
+
+    public function getProvince()
+    {
+        return $this->hasOne(Province::className(), ['id' => 'province_id']);
+    }
+
+    public function getAreas()
+    {
+        return $this->hasMany(Area::className(), ['city_id' => 'id']);
     }
 }
