@@ -2,11 +2,10 @@
 
 namespace backend\models;
 
-use Yii;
-use yii\base\Model;
-use yii\data\ActiveDataProvider;
 use common\models\Orders;
 use common\models\Service;
+use yii\base\Model;
+use yii\data\ActiveDataProvider;
 
 /**
  * OrdersSearch represents the model behind the search form about `common\models\Orders`.
@@ -26,7 +25,7 @@ class OrdersSearch extends Orders
     public function rules()
     {
         return [
-            [['order_id', 'uid', 'worker_id', 'product_id', 'service_id', 'price', 'status'], 'integer'],
+            [['id', 'uid', 'worker_id', 'product_id', 'service_id', 'price', 'status'], 'integer'],
             [['ctime', 'accept_time', 'pay_time', 'finish_time', 'user.name', 'worker.user.name', 'company_id'], 'safe'],
         ];
     }
@@ -72,7 +71,7 @@ class OrdersSearch extends Orders
         }
 
         $query->andFilterWhere([
-            'order_id' => $this->order_id,
+            'id' => $this->id,
             'uid' => $this->uid,
             'worker_id' => $this->worker_id,
             'product_id' => $this->product_id,

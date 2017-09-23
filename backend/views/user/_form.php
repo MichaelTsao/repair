@@ -24,11 +24,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'sex')->dropDownList(Yii::$app->params['sex']) ?>
 
-    <?= $form->field($model, 'country')->dropDownList(common\models\Country::names()) ?>
-
-    <?= $form->field($model, 'city')->dropDownList(common\models\City::names()) ?>
-
-    <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'area')->dropDownList(common\models\Area::names()) ?>
 
     <?= $form->field($model, 'icon_file')->fileInput() ?>
 

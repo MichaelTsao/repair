@@ -2,10 +2,9 @@
 
 namespace backend\models;
 
-use Yii;
+use common\models\Service;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Service;
 
 /**
  * ServiceSearch represents the model behind the search form about `common\models\Service`.
@@ -18,7 +17,7 @@ class ServiceSearch extends Service
     public function rules()
     {
         return [
-            [['service_id', 'status', 'price'], 'integer'],
+            [['id', 'status', 'price'], 'integer'],
             [['name'], 'safe'],
         ];
     }
@@ -56,7 +55,7 @@ class ServiceSearch extends Service
         }
 
         $query->andFilterWhere([
-            'service_id' => $this->service_id,
+            'id' => $this->id,
             'status' => $this->status,
             'company_id' => $this->company_id,
         ]);

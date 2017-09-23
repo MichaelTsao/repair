@@ -1,7 +1,7 @@
 <?php
 
-use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\UserSearch */
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            'uid',
+            'id',
             'username',
             'name',
             'email',
@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'filter'=>Yii::$app->params['sex'],
             ],
-            'citys.name',
+            'area.name',
             'icon',
             'weixin_id',
             [
@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'options'=>['width'=>'85px'],
                 'template' => '{view} {update} {delete} {setWorker}',
                 'buttons' => [
-                    'setWorker' => function ($url, $model, $key) {
+                    'setWorker' => function ($url) {
                         return Html::a('', $url, ['class'=>'glyphicon glyphicon-briefcase', 'title'=>'创建工人']);
                     }
                 ],

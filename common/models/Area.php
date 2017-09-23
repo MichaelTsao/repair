@@ -3,20 +3,25 @@
 namespace common\models;
 
 /**
- * This is the model class for table "city".
+ * This is the model class for table "area".
  *
  * @property integer $id
  * @property string $name
- * @property integer $province_id
+ * @property integer $city_id
  */
-class City extends \yii\db\ActiveRecord
+class Area extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'city';
+        return 'area';
+    }
+
+    static function names()
+    {
+        return static::find()->select(['name'])->indexBy('id')->column();
     }
 
     /**
@@ -25,7 +30,7 @@ class City extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['province_id'], 'integer'],
+            [['city_id'], 'integer'],
             [['name'], 'string', 'max' => 200],
         ];
     }
@@ -38,12 +43,7 @@ class City extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => '名字',
-            'province_id' => '所属省份',
+            'city_id' => '所属城市',
         ];
-    }
-
-    static function names()
-    {
-        return static::find()->select(['name'])->indexBy('id')->column();
     }
 }

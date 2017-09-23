@@ -2,12 +2,10 @@
 
 namespace common\models;
 
-use Yii;
-
 /**
  * This is the model class for table "company".
  *
- * @property integer $company_id
+ * @property integer $id
  * @property string $name
  * @property integer $status
  * @property string $ctime
@@ -30,7 +28,7 @@ class Company extends \yii\db\ActiveRecord
         return [
             [['status'], 'integer'],
             [['ctime'], 'safe'],
-            [['name'], 'string', 'max' => 200]
+            [['name'], 'string', 'max' => 200],
         ];
     }
 
@@ -40,23 +38,19 @@ class Company extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'company_id' => '公司ID',
-            'name' => '公司名',
+            'id' => 'ID',
+            'name' => '名字',
             'status' => '状态',
             'ctime' => '创建时间',
         ];
     }
 
-    static function names($has_admin=false){
+    static function names($has_admin = false)
+    {
+        $c = static::find()->select(['name'])->indexBy('id')->column();
         if ($has_admin) {
-            $name[0] = '管理员';
-        }else{
-            $name = [];
+            array_unshift($c, '管理员');
         }
-        $data = static::find()->all();
-        foreach ($data as $item) {
-            $name[$item->company_id] = $item->name;
-        }
-        return $name;
+        return $c;
     }
 }

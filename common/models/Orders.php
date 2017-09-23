@@ -2,8 +2,6 @@
 
 namespace common\models;
 
-use Yii;
-
 /**
  * This is the model class for table "orders".
  *
@@ -67,16 +65,16 @@ class Orders extends \yii\db\ActiveRecord
 
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['uid' => 'uid']);
+        return $this->hasOne(User::className(), ['id' => 'uid']);
     }
 
     public function getWorker()
     {
-        return $this->hasOne(Worker::className(), ['worker_id' => 'worker_id']);
+        return $this->hasOne(Worker::className(), ['id' => 'worker_id']);
     }
 
     public function getService()
     {
-        return $this->hasOne(Service::className(), ['service_id' => 'service_id']);
+        return $this->hasOne(Service::className(), ['id' => 'service_id']);
     }
 }

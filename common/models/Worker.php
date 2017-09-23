@@ -2,21 +2,20 @@
 
 namespace common\models;
 
-use Yii;
-
 /**
  * This is the model class for table "worker".
  *
- * @property integer $worker_id
+ * @property integer $id
  * @property integer $uid
  * @property integer $company_id
  * @property string $department
  * @property integer $level
  * @property string $position
+ * @property integer $status
  */
 class Worker extends \yii\db\ActiveRecord
 {
-    public static $status = [0=>'关闭', 1=>'正常', 2=>'待审核'];
+    public static $statuses = [0 => '关闭', 1 => '正常', 2 => '待审核'];
 
     /**
      * @inheritdoc
@@ -44,7 +43,7 @@ class Worker extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'worker_id' => '工人ID',
+            'id' => '工人ID',
             'uid' => '用户ID',
             'company_id' => '公司',
             'department' => '部门',
@@ -56,11 +55,11 @@ class Worker extends \yii\db\ActiveRecord
 
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['uid' => 'uid']);
+        return $this->hasOne(User::className(), ['id' => 'uid']);
     }
 
     public function getCompany()
     {
-        return $this->hasOne(Company::className(), ['company_id' => 'company_id']);
+        return $this->hasOne(Company::className(), ['id' => 'company_id']);
     }
 }

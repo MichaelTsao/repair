@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Orders */
 
-$this->title = $model->order_id;
+$this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Orders'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -16,8 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <!--
     <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->order_id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->order_id], [
+        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
@@ -30,18 +30,18 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'order_id',
+            'id',
             [
                 'attribute'=>'uid',
-                'value'=>\common\models\User::findOne(['uid'=>$model->uid])->name,
+                'value' => \common\models\User::findOne(['id' => $model->uid])->name,
             ],
             [
                 'attribute'=>'worker_id',
-                'value'=>\common\models\User::findOne(['uid'=>\common\models\Worker::findOne(['worker_id'=>$model->worker_id])->uid])->name,
+                'value' => \common\models\User::findOne(['id' => \common\models\Worker::findOne(['id' => $model->worker_id])->uid])->name,
             ],
             [
                 'attribute'=>'service_id',
-                'value'=>\common\models\Service::findOne(['service_id'=>$model->service_id])->name,
+                'value' => \common\models\Service::findOne(['id' => $model->service_id])->name,
             ],
             'price',
             [

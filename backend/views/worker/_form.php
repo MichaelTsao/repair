@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Worker */
+/* @var $model_user common\models\User */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -22,7 +23,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model_user, 'sex')->dropDownList(Yii::$app->params['sex']) ?>
 
-    <?= $form->field($model_user, 'city')->dropDownList(\common\models\City::names()) ?>
+    <?= $form->field($model_user, 'area')->dropDownList(\common\models\Area::names()) ?>
 
     <?= $form->field($model_user, 'icon')->textInput(['maxlength' => true]) ?>
 
@@ -32,7 +33,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'level')->dropDownList(Yii::$app->params['worker_level']) ?>
 
-    <?= $form->field($model, 'status')->dropDownList(\common\models\Worker::$status) ?>
+    <?= $form->field($model, 'status')->dropDownList(\common\models\Worker::$statuses) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

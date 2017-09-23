@@ -2,10 +2,9 @@
 
 namespace backend\models;
 
-use Yii;
+use common\models\Worker;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Worker;
 
 /**
  * WorkerSearch represents the model behind the search form about `common\models\Worker`.
@@ -18,7 +17,7 @@ class WorkerSearch extends Worker
     public function rules()
     {
         return [
-            [['worker_id', 'uid', 'company_id', 'level'], 'integer'],
+            [['id', 'uid', 'company_id', 'level'], 'integer'],
             [['department', 'position'], 'safe'],
         ];
     }
@@ -56,7 +55,7 @@ class WorkerSearch extends Worker
         }
 
         $query->andFilterWhere([
-            'worker_id' => $this->worker_id,
+            'id' => $this->id,
             'uid' => $this->uid,
             'company_id' => $this->company_id,
             'level' => $this->level,

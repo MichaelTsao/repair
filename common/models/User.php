@@ -5,8 +5,8 @@ use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
-use yii\web\IdentityInterface;
 use yii\db\Expression;
+use yii\web\IdentityInterface;
 
 /**
  * User model
@@ -20,6 +20,8 @@ use yii\db\Expression;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ * @property string $icon
+ * @property \yii\web\UploadedFile $icon_file
  * @property string $password_raw write-only password
  */
 class User extends ActiveRecord implements IdentityInterface
@@ -59,7 +61,7 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
-            [['sex', 'city', 'country'], 'integer'],
+            [['sex', 'area'], 'integer'],
             [['username', 'name'], 'string', 'max' => 50],
             [['address'], 'string', 'max' => 500],
             [['password_raw', 'weixin_id'], 'string', 'max' => 100],
@@ -82,9 +84,7 @@ class User extends ActiveRecord implements IdentityInterface
             'phone' => '手机号',
             'email' => '邮件',
             'sex' => '性别',
-            'country' => '国家',
-            'city' => '城市',
-            'address' => '地址',
+            'area' => '地区',
             'icon' => '头像',
             'icon_file' => '头像',
             'weixin_id' => '微信ID',
@@ -237,14 +237,9 @@ class User extends ActiveRecord implements IdentityInterface
         return parent::beforeSave($insert);
     }
 
-    public function getCitys()
+    public function getArea()
     {
-        return $this->hasOne(City::className(), ['city_id' => 'city']);
-    }
-
-    public function getCountrys()
-    {
-        return $this->hasOne(Country::className(), ['country_id' => 'country']);
+        return $this->hasOne(Area::className(), ['id' => 'area']);
     }
 
     public function getWorker()

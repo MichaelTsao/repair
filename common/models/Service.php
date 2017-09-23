@@ -2,8 +2,6 @@
 
 namespace common\models;
 
-use Yii;
-
 /**
  * This is the model class for table "service".
  *
@@ -49,6 +47,6 @@ class Service extends \yii\db\ActiveRecord
 
     public function getCompany()
     {
-        return $this->hasOne(Company::className(), ['company_id'=>'company_id']);
+        return $this->hasOne(Company::className(), ['id' => 'company_id']);
     }
 }

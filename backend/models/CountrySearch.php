@@ -2,10 +2,9 @@
 
 namespace backend\models;
 
-use Yii;
+use common\models\Country;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Country;
 
 /**
  * CountrySearch represents the model behind the search form about `common\models\Country`.
@@ -18,7 +17,7 @@ class CountrySearch extends Country
     public function rules()
     {
         return [
-            [['country_id'], 'integer'],
+            [['id'], 'integer'],
             [['name'], 'safe'],
         ];
     }
@@ -56,7 +55,7 @@ class CountrySearch extends Country
         }
 
         $query->andFilterWhere([
-            'country_id' => $this->country_id,
+            'id' => $this->id,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);

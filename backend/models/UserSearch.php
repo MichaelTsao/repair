@@ -18,8 +18,8 @@ class UserSearch extends User
     public function rules()
     {
         return [
-            [['uid', 'sex'], 'integer'],
-            [['username', 'password', 'name', 'phone', 'city', 'icon', 'weixin_id', 'email'], 'safe'],
+            [['id', 'sex'], 'integer'],
+            [['username', 'password', 'name', 'phone', 'area', 'icon', 'weixin_id', 'email'], 'safe'],
         ];
     }
 
@@ -56,26 +56,23 @@ class UserSearch extends User
         }
 
         $query->andFilterWhere([
-            'uid' => $this->uid,
+            'id' => $this->id,
             'sex' => $this->sex,
-            'citys.name' => $this->sex,
         ]);
 
         $workers = Worker::find()->select(['uid'])->column();
-        $query->andFilterWhere(['not in', 'uid', $workers]);
+        $query->andFilterWhere(['not in', 'id', $workers]);
 
         $query->andFilterWhere(['like', 'username', $this->username])
             ->andFilterWhere(['like', 'password', $this->password])
             ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'phone', $this->phone])
             ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'city', $this->city])
-            ->andFilterWhere(['like', 'country', $this->country])
+            ->andFilterWhere(['like', 'area', $this->area])
             ->andFilterWhere(['like', 'icon', $this->icon])
             ->andFilterWhere(['like', 'weixin_id', $this->weixin_id]);
 
-        $query->with('citys');
-        $query->with('countrys');
+        $query->with('area');
 
         return $dataProvider;
     }

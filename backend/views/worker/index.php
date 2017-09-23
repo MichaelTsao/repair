@@ -1,8 +1,8 @@
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
 use common\models\Worker;
+use yii\grid\GridView;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\WorkerSearch */
@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            'worker_id',
+            'id',
             'user.name',
             'company.name',
             'department',
@@ -35,8 +35,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute'=>'status',
-                'value'=>function($data){return Worker::$status[$data->status];},
-                'filter'=>Worker::$status,
+                'value' => function ($data) {
+                    return Worker::$statuses[$data->status];
+                },
+                'filter' => Worker::$statuses,
             ],
             [
                 'class' => 'yii\grid\ActionColumn',

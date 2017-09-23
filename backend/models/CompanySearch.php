@@ -2,10 +2,9 @@
 
 namespace backend\models;
 
-use Yii;
+use common\models\Company;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Company;
 
 /**
  * CompanySearch represents the model behind the search form about `common\models\Company`.
@@ -18,7 +17,7 @@ class CompanySearch extends Company
     public function rules()
     {
         return [
-            [['company_id', 'status'], 'integer'],
+            [['id', 'status'], 'integer'],
             [['name', 'ctime'], 'safe'],
         ];
     }
@@ -56,7 +55,7 @@ class CompanySearch extends Company
         }
 
         $query->andFilterWhere([
-            'company_id' => $this->company_id,
+            'id' => $this->id,
             'status' => $this->status,
             'ctime' => $this->ctime,
         ]);
