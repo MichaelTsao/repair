@@ -2,10 +2,10 @@
 
 namespace backend\models;
 
-use Yii;
+use common\models\User;
+use common\models\Worker;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\User;
 
 /**
  * UserSearch represents the model behind the search form about `common\models\User`.
@@ -60,6 +60,9 @@ class UserSearch extends User
             'sex' => $this->sex,
             'citys.name' => $this->sex,
         ]);
+
+        $workers = Worker::find()->select(['uid'])->column();
+        $query->andFilterWhere(['not in', 'uid', $workers]);
 
         $query->andFilterWhere(['like', 'username', $this->username])
             ->andFilterWhere(['like', 'password', $this->password])
