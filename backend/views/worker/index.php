@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create').Yii::t('app', 'Worker'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create') . Yii::t('app', 'Worker'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -29,12 +29,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'company.name',
             'department',
             [
-                'attribute'=>'level',
-                'value'=>function($data){return \common\models\Logic::getDictValue(Yii::$app->params['worker_level'], $data->level);},
-                'filter'=>Yii::$app->params['worker_level'],
+                'attribute' => 'level',
+                'value' => function ($data) {
+                    return \common\models\Logic::getDictValue(Yii::$app->params['worker_level'], $data->level);
+                },
+                'filter' => Yii::$app->params['worker_level'],
             ],
             [
-                'attribute'=>'status',
+                'attribute' => 'status',
                 'value' => function ($data) {
                     return Worker::$statuses[$data->status];
                 },
@@ -42,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
-                'options'=>['width'=>'70px'],
+                'options' => ['width' => '70px'],
             ],
         ],
     ]); ?>

@@ -18,12 +18,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ],
-        ]) ?>
+        'class' => 'btn btn-danger',
+        'data' => [
+            'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+            'method' => 'post',
+        ],
+    ]) ?>
     </p>
     -->
 
@@ -32,21 +32,21 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             [
-                'attribute'=>'uid',
+                'attribute' => 'uid',
                 'value' => \common\models\User::findOne(['id' => $model->uid])->name,
             ],
             [
-                'attribute'=>'worker_id',
+                'attribute' => 'worker_id',
                 'value' => \common\models\User::findOne(['id' => \common\models\Worker::findOne(['id' => $model->worker_id])->uid])->name,
             ],
             [
-                'attribute'=>'service_id',
+                'attribute' => 'service_id',
                 'value' => \common\models\Service::findOne(['id' => $model->service_id])->name,
             ],
             'price',
             [
-                'attribute'=>'status',
-                'value'=>Yii::$app->params['order_status'][$model->status],
+                'attribute' => 'status',
+                'value' => Yii::$app->params['order_status'][$model->status],
             ],
             'ctime',
             'accept_time',

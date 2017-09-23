@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create').Yii::t('app', 'User'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create') . Yii::t('app', 'User'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -29,22 +29,22 @@ $this->params['breadcrumbs'][] = $this->title;
             'email',
             'phone',
             [
-                'attribute'=>'sex',
-                'value'=>function($data){
+                'attribute' => 'sex',
+                'value' => function ($data) {
                     return Yii::$app->params['sex'][$data->sex];
                 },
-                'filter'=>Yii::$app->params['sex'],
+                'filter' => Yii::$app->params['sex'],
             ],
             'area.name',
             'icon',
             'weixin_id',
             [
                 'class' => 'yii\grid\ActionColumn',
-                'options'=>['width'=>'85px'],
+                'options' => ['width' => '85px'],
                 'template' => '{view} {update} {delete} {setWorker}',
                 'buttons' => [
                     'setWorker' => function ($url) {
-                        return Html::a('', $url, ['class'=>'glyphicon glyphicon-briefcase', 'title'=>'创建工人']);
+                        return Html::a('', $url, ['class' => 'glyphicon glyphicon-briefcase', 'title' => '创建工人']);
                     }
                 ],
             ],
