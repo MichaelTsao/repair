@@ -1,6 +1,5 @@
 <?php
 
-use yii\db\Schema;
 use yii\db\Migration;
 
 class m130524_201442_init extends Migration
@@ -15,15 +14,21 @@ class m130524_201442_init extends Migration
 
         $this->createTable('{{%user}}', [
             'id' => $this->primaryKey(),
-            'username' => $this->string()->notNull()->unique(),
-            'auth_key' => $this->string(32)->notNull(),
-            'password_hash' => $this->string()->notNull(),
-            'password_reset_token' => $this->string()->unique(),
-            'email' => $this->string()->notNull()->unique(),
+            'username' => $this->string()->notNull()->unique()->comment('用户名'),
+            'password' => $this->string()->notNull()->comment('密码'),
+            'auth_key' => $this->string(32)->notNull()->comment('Token'),
+            'email' => $this->string()->comment('邮件'),
+            'name' => $this->string()->comment('名字'),
+            'phone' => $this->string()->notNull()->unique()->comment('手机号'),
+            'sex' => $this->smallInteger()->comment('性别'),
+            'area' => $this->integer()->comment('地区'),
+            'position' => "point DEFAULT NULL COMMENT '位置'",
+            'icon' => $this->string(200)->comment('头像'),
+            'weixin_id' => $this->string(200)->comment('微信OpenID'),
 
-            'status' => $this->smallInteger()->notNull()->defaultValue(10),
-            'created_at' => $this->integer()->notNull(),
-            'updated_at' => $this->integer()->notNull(),
+            'status' => $this->smallInteger()->notNull()->defaultValue(1)->comment('状态'),
+            'created_at' => $this->integer()->notNull()->comment('创建时间'),
+            'updated_at' => $this->integer()->notNull()->comment('更新时间'),
         ], $tableOptions);
     }
 
