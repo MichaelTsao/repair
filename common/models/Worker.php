@@ -12,6 +12,9 @@ namespace common\models;
  * @property integer $level
  * @property string $position
  * @property integer $status
+ * @property \common\models\User $user
+ * @property \common\models\Company $company
+ * @property \common\models\Orders[] $orders
  */
 class Worker extends \yii\db\ActiveRecord
 {
@@ -61,5 +64,10 @@ class Worker extends \yii\db\ActiveRecord
     public function getCompany()
     {
         return $this->hasOne(Company::className(), ['id' => 'company_id']);
+    }
+
+    public function getOrders()
+    {
+        return $this->hasMany(Orders::className(), ['worker_id' => 'id']);
     }
 }

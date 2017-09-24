@@ -45,12 +45,27 @@ class Company extends \yii\db\ActiveRecord
         ];
     }
 
-    static function names($has_admin = false)
+    public static function names($has_admin = false)
     {
         $c = static::find()->select(['name'])->indexBy('id')->column();
         if ($has_admin) {
             array_unshift($c, '管理员');
         }
         return $c;
+    }
+
+    public function getServices()
+    {
+        return $this->hasMany(Service::className(), ['company_id' => 'id']);
+    }
+
+    public function getProducts()
+    {
+        return $this->hasMany(Product::className(), ['company_id' => 'id']);
+    }
+
+    public function getWorkers()
+    {
+        return $this->hasMany(Worker::className(), ['company_id' => 'id']);
     }
 }

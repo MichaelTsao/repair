@@ -24,6 +24,9 @@ use yii\web\IdentityInterface;
  * @property string $icon
  * @property \yii\web\UploadedFile $icon_file
  * @property string $password_raw write-only password
+ * @property \common\models\Area $area
+ * @property \common\models\Worker $worker
+ * @property \common\models\Orders[] $orders
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -64,10 +67,10 @@ class User extends ActiveRecord implements IdentityInterface
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
             [['sex', 'area'], 'integer'],
             [['username', 'name'], 'string', 'max' => 50],
-            [['address'], 'string', 'max' => 500],
             [['password_raw', 'weixin_id'], 'string', 'max' => 100],
             [['email'], 'string', 'max' => 100],
             [['phone'], 'string', 'max' => 20],
+            [['phone', 'username'], 'unique'],
             [['phone'], 'string', 'min' => 11],
             [['password_raw'], 'string', 'min' => 6],
             [['icon'], 'string', 'max' => 100],
@@ -78,7 +81,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'uid' => '用户ID',
+            'id' => '用户ID',
             'username' => '账号',
             'password_raw' => '密码',
             'name' => '名字',
@@ -97,7 +100,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['uid' => $id, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
     }
 
     /**
@@ -245,6 +248,11 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function getWorker()
     {
-        return $this->hasOne(Worker::className(), ['uid' => 'uid']);
+        return $this->hasOne(Worker::className(), ['uid' => 'id']);
+    }
+
+    public function getOrders()
+    {
+        return $this->hasMany(Orders::className(), ['uid' => 'id']);
     }
 }

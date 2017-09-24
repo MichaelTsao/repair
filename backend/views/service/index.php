@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create').Yii::t('app', 'Service'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create') . Yii::t('app', 'Service'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -30,12 +30,22 @@ $this->params['breadcrumbs'][] = $this->title;
             'price',
             'company.name',
             [
-                'attribute'=>'status',
-                'value'=>function($data){return \common\models\Logic::getDictValue(Yii::$app->params['status'], $data->status);},
-                'filter'=>Yii::$app->params['status'],
+                'attribute' => 'status',
+                'value' => function ($data) {
+                    return \common\models\Logic::getDictValue(Yii::$app->params['status'], $data->status);
+                },
+                'filter' => Yii::$app->params['status'],
             ],
 
-            ['class' => 'yii\grid\ActionColumn', 'options'=>['width'=>'70px']],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'options' => ['width' => '70px'],
+                'visibleButtons' => [
+                    'delete' => function ($model) {
+                        return count($model->orders) == 0;
+                    }
+                ],
+            ],
         ],
     ]); ?>
 

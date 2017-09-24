@@ -2,13 +2,13 @@
 
 namespace backend\controllers;
 
-use Yii;
-use common\models\Worker;
-use common\models\User;
 use backend\models\WorkerSearch;
+use common\models\User;
+use common\models\Worker;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * WorkerController implements the CRUD actions for Worker model.
@@ -77,9 +77,9 @@ class WorkerController extends Controller
 
         if ($model_user->load(Yii::$app->request->post()) && $model->load(Yii::$app->request->post())) {
             if ($model_user->save()) {
-                $model->uid = $model_user->uid;
+                $model->uid = $model_user->id;
                 if ($model->save()){
-                    return $this->redirect(['view', 'id' => $model->worker_id]);
+                    return $this->redirect(['view', 'id' => $model->id]);
                 }else{
                     $model_user->delete();
                 }
@@ -104,7 +104,7 @@ class WorkerController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()
             && $model_user->load(Yii::$app->request->post()) && $model_user->save()) {
-            return $this->redirect(['view', 'id' => $model->worker_id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,

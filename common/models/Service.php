@@ -5,10 +5,11 @@ namespace common\models;
 /**
  * This is the model class for table "service".
  *
- * @property integer $service_id
+ * @property integer $id
  * @property string $name
  * @property integer $price
  * @property integer $status
+ * @property integer $company_id
  */
 class Service extends \yii\db\ActiveRecord
 {
@@ -37,7 +38,7 @@ class Service extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'service_id' => '服务ID',
+            'id' => '服务ID',
             'name' => '服务名',
             'price' => '价格',
             'status' => '状态',
@@ -48,5 +49,10 @@ class Service extends \yii\db\ActiveRecord
     public function getCompany()
     {
         return $this->hasOne(Company::className(), ['id' => 'company_id']);
+    }
+
+    public function getOrders()
+    {
+        return $this->hasMany(Orders::className(), ['service_id' => 'id']);
     }
 }

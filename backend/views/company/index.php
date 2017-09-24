@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create').Yii::t('app', 'Company'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create') . Yii::t('app', 'Company'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -28,13 +28,22 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
             [
-                'attribute'=>'status',
-                'value'=>function($data){return Yii::$app->params['status'][$data->status];},
-                'filter'=>Yii::$app->params['status'],
+                'attribute' => 'status',
+                'value' => function ($data) {
+                    return Yii::$app->params['status'][$data->status];
+                },
+                'filter' => Yii::$app->params['status'],
             ],
             'ctime',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'visibleButtons' => [
+                    'delete' => function ($model) {
+                        return count($model->workers) == 0 && count($model->services) == 0 && count($model->products) == 0;
+                    }
+                ],
+            ],
         ],
     ]); ?>
 

@@ -47,6 +47,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         return Html::a('', $url, ['class' => 'glyphicon glyphicon-briefcase', 'title' => '创建工人']);
                     }
                 ],
+                'visibleButtons' => [
+                    'delete' => function ($model) {
+                        return count($model->orders) == 0 && !$model->worker;
+                    }
+                ],
             ],
         ],
     ]); ?>

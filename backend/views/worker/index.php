@@ -45,6 +45,11 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'yii\grid\ActionColumn',
                 'options' => ['width' => '70px'],
+                'visibleButtons' => [
+                    'delete' => function ($model) {
+                        return count($model->orders) == 0;
+                    }
+                ],
             ],
         ],
     ]); ?>

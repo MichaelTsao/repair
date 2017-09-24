@@ -16,13 +16,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ],
-        ]) ?>
+        <?php if (count($model->workers) == 0 && count($model->services) == 0 && count($model->products) == 0): ?>
+            <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                    'method' => 'post',
+                ],
+            ]) ?>
+        <?php endif; ?>
     </p>
 
     <?= DetailView::widget([
@@ -31,8 +33,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
             [
-                'attribute'=>'status',
-                'value'=>\common\models\Logic::getDictValue(Yii::$app->params['status'], $model->status),
+                'attribute' => 'status',
+                'value' => \common\models\Logic::getDictValue(Yii::$app->params['status'], $model->status),
             ],
             'ctime',
         ],
