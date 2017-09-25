@@ -4,8 +4,8 @@
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \frontend\models\SignupForm */
 
-use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\helpers\Html;
 
 $this->title = '注册';
 ?>
@@ -18,13 +18,9 @@ $this->title = '注册';
 
             <?= $form->field($model, 'username') ?>
 
-            <?= $form->field($model, 'email') ?>
-
             <?= $form->field($model, 'password')->passwordInput() ?>
 
             <?= $form->field($model, 'password_again')->passwordInput() ?>
-
-            <?= $form->field($model, 'name') ?>
 
             <?= $form->field($model, 'phone') ?>
 

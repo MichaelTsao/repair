@@ -5,12 +5,13 @@
  * Date: 15/11/19
  * Time: 下午12:35
  */
+/* @var $data \common\models\Orders */
 ?>
 <h1>订单信息</h1>
 <br/>
 <p>
     用户: &nbsp;<?= $data->user->name ?><br/>
-    服务: &nbsp;<?= \common\models\Service::findOne(['service_id'=>$data->service_id])->name ?><br/>
+    服务: &nbsp;<?= $data->service->name ?><br/>
     价格: &nbsp;<?= $data->price ?><br/>
     工人: &nbsp;<?= $data->worker->user->name ?><br/>
     状态: &nbsp;<?= Yii::$app->params['order_status'][$data->status] ?><br/>
@@ -36,25 +37,25 @@
 </p>
 <hr/>
 
-<?php if($data->status == 1):?>
-<p>
-    <a class="btn btn-lg btn-success" href="/worker/accept?id=<?= $data->order_id ?>">接单</a>
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    <a class="btn btn-lg btn-danger" href="/worker/refuse?id=<?= $data->order_id ?>">拒单</a>
-</p>
-<?php endif ?>
-
-<?php if($data->status == 7):?>
+<?php if ($data->status == 1): ?>
     <p>
-        <b>请在 <?=$data->service_time ?> 完成工作.</b>
-        <br/><br/>
-        <a class="btn btn-lg btn-success" href="/worker/start?id=<?= $data->order_id ?>">开始服务</a>
+        <a class="btn btn-lg btn-success" href="/worker/accept?id=<?= $data->id ?>">接单</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <a class="btn btn-lg btn-danger" href="/worker/refuse?id=<?= $data->id ?>">拒单</a>
     </p>
 <?php endif ?>
 
-<?php if($data->status == 5):?>
+<?php if ($data->status == 7): ?>
     <p>
-        <a class="btn btn-lg btn-success" href="/worker/has-pay?id=<?= $data->order_id ?>">确认用户支付</a>
+        <b>请在 <?= $data->service_time ?> 完成工作.</b>
+        <br/><br/>
+        <a class="btn btn-lg btn-success" href="/worker/start?id=<?= $data->id ?>">开始服务</a>
+    </p>
+<?php endif ?>
+
+<?php if ($data->status == 5): ?>
+    <p>
+        <a class="btn btn-lg btn-success" href="/worker/has-pay?id=<?= $data->id ?>">确认用户支付</a>
     </p>
 <?php endif ?>
 
@@ -71,16 +72,16 @@
             'format' => 'yyyy-mm-dd HH:ii',
             'todayBtn' => true
         ]
-    ]);?>
+    ]); ?>
     <br/><br/>
     <p>
         <a class="btn btn-lg btn-success" href="#" onclick="setTime()">确认服务时间</a>
     </p>
 
     <script type="text/javascript">
-        function setTime(){
+        function setTime() {
             var time = $('#service_time').val();
-            window.location.href = "/worker/set-service-time?id=<?= $data->order_id ?>&time="+time;
+            window.location.href = "/worker/set-service-time?id=<?= $data->id ?>&time=" + time;
         }
     </script>
 <?php endif; ?>

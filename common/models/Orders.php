@@ -17,6 +17,9 @@ namespace common\models;
  * @property string $accept_time
  * @property string $pay_time
  * @property string $finish_time
+ * @property \common\models\User $user
+ * @property \common\models\Worker $worker
+ * @property \common\models\Service $service
  */
 class Orders extends \yii\db\ActiveRecord
 {

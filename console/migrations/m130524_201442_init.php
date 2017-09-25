@@ -27,8 +27,8 @@ class m130524_201442_init extends Migration
             'weixin_id' => $this->string(200)->comment('微信OpenID'),
 
             'status' => $this->smallInteger()->notNull()->defaultValue(1)->comment('状态'),
-            'created_at' => $this->integer()->notNull()->comment('创建时间'),
-            'updated_at' => $this->integer()->notNull()->comment('更新时间'),
+            'created_at' => $this->dateTime()->notNull()->comment('创建时间'),
+            'updated_at' => $this->dateTime()->notNull()->comment('更新时间'),
         ], $tableOptions);
     }
 
