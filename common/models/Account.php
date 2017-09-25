@@ -3,9 +3,9 @@
 namespace common\models;
 
 use Yii;
+use yii\base\NotSupportedException;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
-use yii\base\NotSupportedException;
 
 /**
  * This is the model class for table "account".
@@ -45,6 +45,8 @@ class Account extends ActiveRecord implements IdentityInterface
             [['password'], 'safe'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            [['username'], 'required'],
+            [['username'], 'unique'],
         ];
     }
 
