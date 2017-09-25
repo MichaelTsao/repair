@@ -1,14 +1,15 @@
 <?php
 
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
 use backend\assets\AppAsset;
-use yii\helpers\Html;
+use common\widgets\Alert;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
+use yii\helpers\Html;
 use yii\widgets\Breadcrumbs;
-use common\widgets\Alert;
 
 AppAsset::register($this);
 ?>
@@ -28,7 +29,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->params['site_name'].' 后台',
+        'brandLabel' => Yii::$app->params['site_name'],
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -39,12 +40,12 @@ AppAsset::register($this);
     } else {
         $menuItems = [
             ['label' => '订单', 'url' => ['/orders/index']],
-            ['label' => '工人', 'url' => ['/worker/index'], 'visible' => Yii::$app->user->getIdentity()->company_id==0],
-            ['label' => '用户', 'url' => ['/user/index'], 'visible' => Yii::$app->user->getIdentity()->company_id==0],
+            ['label' => '工人', 'url' => ['/worker/index'], 'visible' => Yii::$app->user->identity->company_id == 0],
+            ['label' => '用户', 'url' => ['/user/index'], 'visible' => Yii::$app->user->identity->company_id == 0],
             ['label' => '服务项目', 'url' => ['/service/index']],
-            ['label' => '公司', 'url' => ['/company/index'], 'visible' => Yii::$app->user->getIdentity()->company_id==0],
-            ['label' => '城市', 'url' => ['/city/index'], 'visible' => Yii::$app->user->getIdentity()->company_id==0],
-            ['label' => '国家', 'url' => ['/country/index'], 'visible' => Yii::$app->user->getIdentity()->company_id==0],
+            ['label' => '公司', 'url' => ['/company/index'], 'visible' => Yii::$app->user->identity->company_id == 0],
+            ['label' => '城市', 'url' => ['/city/index'], 'visible' => Yii::$app->user->identity->company_id == 0],
+            ['label' => '国家', 'url' => ['/country/index'], 'visible' => Yii::$app->user->identity->company_id == 0],
             ['label' => '系统账号', 'url' => ['/account/index']],
         ];
         $menuItems[] = [

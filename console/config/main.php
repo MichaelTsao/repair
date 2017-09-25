@@ -22,4 +22,9 @@ return [
         ],
     ],
     'params' => $params,
+    'controllerMap' => [
+        'stubs' => [
+            'class' => 'bazilio\stubsgenerator\StubsController',
+        ],
+    ],
 ];
