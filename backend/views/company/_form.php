@@ -12,9 +12,23 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <div class="row">
+        <div class="col-md-6">
+            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($model, 'status')->dropDownList(Yii::$app->params['status']) ?>
+        </div>
+    </div>
 
-    <?= $form->field($model, 'status')->dropDownList(Yii::$app->params['status']) ?>
+    <div class="row">
+        <div class="col-md-12">
+            <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

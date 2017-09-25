@@ -32,6 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
+            'address',
+            'phone',
             [
                 'attribute' => 'status',
                 'value' => \common\models\Logic::getDictValue(Yii::$app->params['status'], $model->status),

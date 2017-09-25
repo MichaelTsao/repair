@@ -7,6 +7,8 @@ namespace common\models;
  *
  * @property integer $id
  * @property string $name
+ * @property string $address
+ * @property string $phone
  * @property integer $status
  * @property string $ctime
  */
@@ -28,7 +30,7 @@ class Company extends \yii\db\ActiveRecord
         return [
             [['status'], 'integer'],
             [['ctime'], 'safe'],
-            [['name'], 'string', 'max' => 200],
+            [['name', 'address', 'phone'], 'string', 'max' => 200],
         ];
     }
 
@@ -40,6 +42,8 @@ class Company extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => '名字',
+            'address' => '地址',
+            'phone' => '电话',
             'status' => '状态',
             'ctime' => '创建时间',
         ];
