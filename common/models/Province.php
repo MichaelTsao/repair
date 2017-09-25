@@ -8,6 +8,8 @@ namespace common\models;
  * @property integer $id
  * @property string $name
  * @property integer $country_id
+ * @property \common\models\Country $country
+ * @property \common\models\City[] $cities
  */
 class Province extends \yii\db\ActiveRecord
 {
@@ -42,9 +44,14 @@ class Province extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function names()
+    {
+        return static::find()->select(['name'])->indexBy('id')->column();
+    }
+
     public function getCountry()
     {
-        return $this->hasOne(Country::className(), ['id' => $this->country_id]);
+        return $this->hasOne(Country::className(), ['id' => 'country_id']);
     }
 
     public function getCities()

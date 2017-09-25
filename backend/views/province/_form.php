@@ -4,17 +4,20 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Country */
+/* @var $model common\models\Province */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="country-form">
+<div class="province-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($model, 'country_id')->dropDownList(\common\models\Country::names()) ?>
         </div>
     </div>
 

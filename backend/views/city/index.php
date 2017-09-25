@@ -1,7 +1,7 @@
 <?php
 
-use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\CitySearch */
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create').Yii::t('app', 'City'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create') . Yii::t('app', 'City'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -26,8 +26,23 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'name',
+            [
+                'attribute' => 'province_id',
+                'value' => function ($model) {
+                    return $model->province->name;
+                },
+                'label' => '所属省份',
+            ],
 
-            ['class' => 'yii\grid\ActionColumn', 'options'=>['width'=>'70px']],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'options' => ['width' => '70px'],
+                'visibleButtons' => [
+                    'delete' => function ($model) {
+                        return count($model->areas) == 0;
+                    }
+                ],
+            ],
         ],
     ]); ?>
 

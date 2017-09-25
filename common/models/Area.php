@@ -51,4 +51,9 @@ class Area extends \yii\db\ActiveRecord
     {
         return $this->hasOne(City::className(), ['id' => 'city_id']);
     }
+
+    public function getUsers()
+    {
+        return $this->hasMany(User::className(), ['area' => 'id']);
+    }
 }

@@ -2,37 +2,40 @@
 
 namespace backend\controllers;
 
-use backend\models\CountrySearch;
-use common\models\Country;
+use backend\models\ProvinceSearch;
+use common\models\Province;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
- * CountryController implements the CRUD actions for Country model.
+ * ProvinceController implements the CRUD actions for Province model.
  */
-class CountryController extends Controller
+class ProvinceController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['post'],
+                    'delete' => ['POST'],
                 ],
             ],
         ];
     }
 
     /**
-     * Lists all Country models.
+     * Lists all Province models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new CountrySearch();
+        $searchModel = new ProvinceSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -42,7 +45,7 @@ class CountryController extends Controller
     }
 
     /**
-     * Displays a single Country model.
+     * Displays a single Province model.
      * @param integer $id
      * @return mixed
      */
@@ -54,13 +57,29 @@ class CountryController extends Controller
     }
 
     /**
-     * Creates a new Country model.
+     * Finds the Province model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Province the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Province::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    /**
+     * Creates a new Province model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Country();
+        $model = new Province();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -72,7 +91,7 @@ class CountryController extends Controller
     }
 
     /**
-     * Updates an existing Country model.
+     * Updates an existing Province model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -91,7 +110,7 @@ class CountryController extends Controller
     }
 
     /**
-     * Deletes an existing Country model.
+     * Deletes an existing Province model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -101,21 +120,5 @@ class CountryController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the Country model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Country the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Country::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
     }
 }

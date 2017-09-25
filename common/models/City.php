@@ -8,6 +8,8 @@ namespace common\models;
  * @property integer $id
  * @property string $name
  * @property integer $province_id
+ * @property \common\models\Province $province
+ * @property \common\models\Area[] $areas
  */
 class City extends \yii\db\ActiveRecord
 {

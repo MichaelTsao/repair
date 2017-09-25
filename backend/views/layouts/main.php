@@ -44,7 +44,9 @@ AppAsset::register($this);
             ['label' => '用户', 'url' => ['/user/index'], 'visible' => Yii::$app->user->identity->company_id == 0],
             ['label' => '服务项目', 'url' => ['/service/index']],
             ['label' => '公司', 'url' => ['/company/index'], 'visible' => Yii::$app->user->identity->company_id == 0],
+            ['label' => '地区', 'url' => ['/area/index'], 'visible' => Yii::$app->user->identity->company_id == 0],
             ['label' => '城市', 'url' => ['/city/index'], 'visible' => Yii::$app->user->identity->company_id == 0],
+            ['label' => '省份', 'url' => ['/province/index'], 'visible' => Yii::$app->user->identity->company_id == 0],
             ['label' => '国家', 'url' => ['/country/index'], 'visible' => Yii::$app->user->identity->company_id == 0],
             ['label' => '系统账号', 'url' => ['/account/index']],
         ];
