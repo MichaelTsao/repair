@@ -36,7 +36,8 @@ class Worker extends \yii\db\ActiveRecord
         return [
             [['uid', 'company_id', 'level', 'status'], 'integer'],
             [['position'], 'string'],
-            [['department'], 'string', 'max' => 200]
+            [['department'], 'string', 'max' => 200],
+            [['uid'], 'required'],
         ];
     }
 

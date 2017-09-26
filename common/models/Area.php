@@ -8,6 +8,8 @@ namespace common\models;
  * @property integer $id
  * @property string $name
  * @property integer $city_id
+ * @property \common\models\City $city
+ * @property \common\models\User[] $users
  */
 class Area extends \yii\db\ActiveRecord
 {
@@ -19,9 +21,13 @@ class Area extends \yii\db\ActiveRecord
         return 'area';
     }
 
-    static function names()
+    static function names($cityId = -1)
     {
-        return static::find()->select(['name'])->indexBy('id')->column();
+        $query = static::find()->select(['name'])->indexBy('id');
+        if ($cityId > -1) {
+            $query->where(['city_id' => $cityId]);
+        }
+        return $query->column();
     }
 
     /**

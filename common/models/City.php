@@ -44,9 +44,13 @@ class City extends \yii\db\ActiveRecord
         ];
     }
 
-    public static function names()
+    public static function names($provinceId = -1)
     {
-        return static::find()->select(['name'])->indexBy('id')->column();
+        $query = static::find()->select(['name'])->indexBy('id');
+        if ($provinceId > -1) {
+            $query->where(['province_id' => $provinceId]);
+        }
+        return $query->column();
     }
 
     public function getProvince()

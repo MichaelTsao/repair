@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'sex',
                 'value' => Logic::getDictValue(Yii::$app->params['sex'], $model->sex),
             ],
-            'area.name',
+            'areaInfo.name',
             'icon',
             'weixin_id',
         ],

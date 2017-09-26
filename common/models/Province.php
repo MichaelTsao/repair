@@ -44,9 +44,13 @@ class Province extends \yii\db\ActiveRecord
         ];
     }
 
-    public static function names()
+    public static function names($countryId = -1)
     {
-        return static::find()->select(['name'])->indexBy('id')->column();
+        $query = static::find()->select(['name'])->indexBy('id');
+        if ($countryId > -1) {
+            $query->where(['country_id' => $countryId]);
+        }
+        return $query->column();
     }
 
     public function getCountry()

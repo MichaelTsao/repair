@@ -17,6 +17,9 @@ use yii\web\IdentityInterface;
  * @property string $password
  * @property string $name
  * @property string $email
+ * @property string $phone
+ * @property integer $sex
+ * @property integer $area
  * @property string $auth_key
  * @property integer $status
  * @property integer $created_at
@@ -24,7 +27,7 @@ use yii\web\IdentityInterface;
  * @property string $icon
  * @property \yii\web\UploadedFile $icon_file
  * @property string $password_raw write-only password
- * @property \common\models\Area $area
+ * @property \common\models\Area $areaInfo
  * @property \common\models\Worker $worker
  * @property \common\models\Orders[] $orders
  */
@@ -241,7 +244,7 @@ class User extends ActiveRecord implements IdentityInterface
         return parent::beforeSave($insert);
     }
 
-    public function getArea()
+    public function getAreaInfo()
     {
         return $this->hasOne(Area::className(), ['id' => 'area']);
     }

@@ -16,7 +16,7 @@ class m130524_201442_init extends Migration
             'id' => $this->primaryKey(),
             'username' => $this->string()->notNull()->unique()->comment('用户名'),
             'password' => $this->string()->notNull()->comment('密码'),
-            'auth_key' => $this->string(32)->notNull()->comment('Token'),
+            'auth_key' => $this->string(32)->comment('Token'),
             'email' => $this->string()->comment('邮件'),
             'name' => $this->string()->comment('名字'),
             'phone' => $this->string()->notNull()->unique()->comment('手机号'),

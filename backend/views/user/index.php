@@ -31,11 +31,14 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'sex',
                 'value' => function ($data) {
-                    return Yii::$app->params['sex'][$data->sex];
+                    return isset(Yii::$app->params['sex'][$data->sex]) ? Yii::$app->params['sex'][$data->sex] : '未设置';
                 },
                 'filter' => Yii::$app->params['sex'],
             ],
-            'area.name',
+            [
+                'attribute' => 'areaInfo.name',
+                'label' => '地区',
+            ],
             'icon',
             'weixin_id',
             [

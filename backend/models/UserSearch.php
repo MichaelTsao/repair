@@ -72,7 +72,7 @@ class UserSearch extends User
             ->andFilterWhere(['like', 'icon', $this->icon])
             ->andFilterWhere(['like', 'weixin_id', $this->weixin_id]);
 
-        $query->with('area');
+        $query->with('areaInfo');
 
         return $dataProvider;
     }

@@ -2,12 +2,13 @@
 
 namespace backend\controllers;
 
-use Yii;
-use common\models\User;
 use backend\models\UserSearch;
+use common\models\Place;
+use common\models\User;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
 /**
@@ -73,17 +74,26 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new User();
+        $place = new Place();
 
-        if ($model->load(Yii::$app->request->post())) {
-            if ($image = UploadedFile::getInstance($model, 'icon_file')) {
-                $model->icon_file = $image;
-            }
-            if ($model->save()) {
-                return $this->redirect(['view', 'id' => $model->uid]);
+        if ($type = Yii::$app->request->post('set-place')) {
+            $place->scenario = $type;
+            $place->load(Yii::$app->request->post());
+        } else {
+            if ($model->load(Yii::$app->request->post())) {
+                $place->load(Yii::$app->request->post());
+                $model->area = $place->area;
+                if ($image = UploadedFile::getInstance($model, 'icon_file')) {
+                    $model->icon_file = $image;
+                }
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->uid]);
+                }
             }
         }
         return $this->render('create', [
             'model' => $model,
+            'place' => $place,
         ]);
     }
 
@@ -97,14 +107,24 @@ class UserController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post())) {
-            $model->icon_file = UploadedFile::getInstance($model, 'icon_file');
-            if ($model->save()) {
-                return $this->redirect(['view', 'id' => $model->uid]);
+        if ($type = Yii::$app->request->post('set-place')) {
+            $place = new Place();
+            $place->scenario = $type;
+            $place->load(Yii::$app->request->post());
+        } else {
+            $place = Place::create($model);
+            if ($model->load(Yii::$app->request->post())) {
+                $place->load(Yii::$app->request->post());
+                $model->area = $place->area;
+                $model->icon_file = UploadedFile::getInstance($model, 'icon_file');
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
         }
         return $this->render('update', [
             'model' => $model,
+            'place' => $place,
         ]);
     }
 

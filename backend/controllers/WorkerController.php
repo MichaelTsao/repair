@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\WorkerSearch;
+use common\models\Place;
 use common\models\User;
 use common\models\Worker;
 use Yii;
@@ -22,7 +23,7 @@ class WorkerController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
-],
+                ],
             ],
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
@@ -74,20 +75,29 @@ class WorkerController extends Controller
     {
         $model_user = new User();
         $model = new Worker();
+        $place = new Place();
 
-        if ($model_user->load(Yii::$app->request->post()) && $model->load(Yii::$app->request->post())) {
-            if ($model_user->save()) {
-                $model->uid = $model_user->id;
-                if ($model->save()){
-                    return $this->redirect(['view', 'id' => $model->id]);
-                }else{
-                    $model_user->delete();
+        if ($type = Yii::$app->request->post('set-place')) {
+            $place->scenario = $type;
+            $place->load(Yii::$app->request->post());
+        } else {
+            if ($model_user->load(Yii::$app->request->post()) && $model->load(Yii::$app->request->post())) {
+                $place->load(Yii::$app->request->post());
+                $model_user->area = $place->area;
+                if ($model_user->save()) {
+                    $model->uid = $model_user->id;
+                    if ($model->save()) {
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    } else {
+                        $model_user->delete();
+                    }
                 }
             }
         }
         return $this->render('create', [
             'model' => $model,
             'model_user' => $model_user,
+            'place' => $place,
         ]);
     }
 
@@ -102,15 +112,25 @@ class WorkerController extends Controller
         $model = $this->findModel($id);
         $model_user = User::findOne($model->uid);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()
-            && $model_user->load(Yii::$app->request->post()) && $model_user->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($type = Yii::$app->request->post('set-place')) {
+            $place = new Place();
+            $place->scenario = $type;
+            $place->load(Yii::$app->request->post());
         } else {
-            return $this->render('update', [
-                'model' => $model,
-                'model_user' => $model_user,
-            ]);
+            $place = Place::create($model_user);
+            $place->load(Yii::$app->request->post());
+            $model_user->area = $place->area;
+            if ($model->load(Yii::$app->request->post()) && $model->save()
+                && $model_user->load(Yii::$app->request->post()) && $model_user->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
+
+        return $this->render('update', [
+            'model' => $model,
+            'model_user' => $model_user,
+            'place' => $place,
+        ]);
     }
 
     /**
