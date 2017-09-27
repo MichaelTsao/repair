@@ -1,17 +1,20 @@
 <?php
+
 namespace frontend\controllers;
 
-use Yii;
 use common\models\LoginForm;
+use common\models\Place;
+use frontend\models\ContactForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
-use frontend\models\ContactForm;
+use Yii;
 use yii\base\InvalidParamException;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
+use yii\web\UploadedFile;
 
 /**
  * Site controller
@@ -34,7 +37,7 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index', 'user'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -72,9 +75,9 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        if (Yii::$app->user->getIdentity()->worker && Yii::$app->user->getIdentity()->worker->status == 1) {
+        if (Yii::$app->user->identity->worker && Yii::$app->user->identity->worker->status == 1) {
             return $this->render('worker_index');
-        }else{
+        } else {
             return $this->render('index');
         }
     }
@@ -213,5 +216,28 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+
+    public function actionUser()
+    {
+        $user = Yii::$app->user->identity;
+
+        if ($type = Yii::$app->request->post('set-place')) {
+            $place = new Place();
+            $place->scenario = $type;
+            $place->load(Yii::$app->request->post());
+        } else {
+            $place = Place::create($user);
+            if ($user->load(Yii::$app->request->post())) {
+                $place->load(Yii::$app->request->post());
+                $user->area = $place->area;
+                $user->icon_file = UploadedFile::getInstance($user, 'icon_file');
+                if ($user->save()) {
+                    return $this->refresh();
+                }
+            }
+        }
+
+        return $this->render('user', ['user' => $user, 'place' => $place]);
     }
 }
