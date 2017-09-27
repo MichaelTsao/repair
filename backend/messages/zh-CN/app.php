@@ -37,4 +37,7 @@ return [
     'Worker' => '工人',
     'Provinces' => '省份',
     'Province' => '省份',
+    'Addresses' => '地址',
+    'Address' => '地址',
+    'Create Address' => '新建地址',
 ];

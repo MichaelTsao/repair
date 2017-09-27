@@ -39,15 +39,24 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'areaInfo.name',
                 'label' => '地区',
             ],
-            'icon',
+            [
+                'attribute' => 'icon',
+                'value' => function ($model) {
+                    return $model->icon;
+                },
+            ],
             'weixin_id',
             [
                 'class' => 'yii\grid\ActionColumn',
-                'options' => ['width' => '85px'],
-                'template' => '{view} {update} {delete} {setWorker}',
+                'options' => ['width' => '90'],
+                'template' => '{view} {update} {delete} {setAddress}',
                 'buttons' => [
                     'setWorker' => function ($url) {
                         return Html::a('', $url, ['class' => 'glyphicon glyphicon-briefcase', 'title' => '创建工人']);
+                    },
+                    'setAddress' => function ($url, $model) {
+                        return Html::a('', \yii\helpers\Url::to(['address/index', 'id' => $model->id]),
+                            ['class' => 'glyphicon glyphicon-home', 'title' => '设置地址']);
                     }
                 ],
                 'visibleButtons' => [
