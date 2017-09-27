@@ -12,6 +12,12 @@ class m170923_092520_create_orders_table extends Migration
      */
     public function up()
     {
+        $tableOptions = null;
+        if ($this->db->driverName === 'mysql') {
+            // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
+            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
+        }
+
         $this->createTable('orders', [
             'id' => $this->primaryKey(),
             'uid' => $this->integer()->comment('用户'),
@@ -28,7 +34,7 @@ class m170923_092520_create_orders_table extends Migration
             'pay_time' => $this->dateTime()->comment('支付时间'),
             'finish_time' => $this->dateTime()->comment('完成时间'),
             'cancel_time' => $this->dateTime()->comment('取消时间'),
-        ]);
+        ], $tableOptions);
     }
 
     /**

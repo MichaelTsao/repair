@@ -12,6 +12,12 @@ class m170923_084900_create_worker_table extends Migration
      */
     public function up()
     {
+        $tableOptions = null;
+        if ($this->db->driverName === 'mysql') {
+            // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
+            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
+        }
+
         $this->createTable('worker', [
             'id' => $this->primaryKey(),
             'uid' => $this->integer()->comment('用户'),
@@ -20,7 +26,7 @@ class m170923_084900_create_worker_table extends Migration
             'level' => $this->smallInteger()->defaultValue(0)->comment('等级'),
             'position' => "point DEFAULT NULL COMMENT '位置'",
             'status' => $this->smallInteger()->defaultValue(1)->comment('状态'),
-        ]);
+        ], $tableOptions);
     }
 
     /**
